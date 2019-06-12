@@ -17,16 +17,11 @@ struct list_node {
 typedef struct list_node ListNode;
 
 ListNode *back(ListNode *ln) {
-	if (ln == NULL) {
-		return NULL;
+	if (ln == NULL || ln->next == NULL) {
+		return ln;
 	}
 	else {
-		if (ln->next == NULL) {
-			return ln;
-		}
-		else {
-			return back(ln->next);
-		}
+		return back(ln->next);
 	}
 }
 
@@ -52,19 +47,15 @@ ListNode *append(ListNode *ln, const XY *p) {
 }
 
 double len(const ListNode *ln, double a) {
-	if (ln == NULL) {
+	if (ln == NULL || ln->next == NULL) {
 		return a;
 	}
 	else {
-		if (ln->next == NULL) {
-			return a;
-		}
-		else {
-			double dx = ln->p.x - ln->next->p.x;
-			double dy = ln->p.y - ln->next->p.y;
-			double dd = dx * dx + dy * dy;
-			return len(ln->next, a + sqrt(dd));
-		}
+		double dx = ln->p.x - ln->next->p.x;
+		double dy = ln->p.y - ln->next->p.y;
+		double dd = dx * dx + dy * dy;
+
+		return len(ln->next, a + sqrt(dd));
 	}
 }
 
